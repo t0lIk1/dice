@@ -1,3 +1,5 @@
+const AsciiTable = require("ascii-table");
+
 class ProbabilityTable {
   static calculateProbabilities(diceList) {
     const table = [];
@@ -11,6 +13,7 @@ class ProbabilityTable {
         const diceA = diceList[i];
         const diceB = diceList[j];
         let wins = 0;
+
         for (let a = 0; a < diceA.getFaces(); a++) {
           for (let b = 0; b < diceB.getFaces(); b++) {
             if (diceA.roll(a) > diceB.roll(b)) wins++;
@@ -28,11 +31,15 @@ class ProbabilityTable {
   }
 
   static displayTable(diceList, table) {
-    console.log("Probabilities of winning:");
-    console.log("Dice\t" + diceList.map((d, i) => `D${i}`).join("\t"));
+    const asciiTable = new AsciiTable("Probabilities of Winning");
+
+    asciiTable.setHeading("Dice", ...diceList.map((_, i) => `D${i}`));
+
     table.forEach((row, i) => {
-      console.log(`D${i}\t` + row.join("\t"));
+      asciiTable.addRow(`D${i}`, ...row);
     });
+
+    console.log(asciiTable.toString());
   }
 }
 

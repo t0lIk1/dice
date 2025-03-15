@@ -153,7 +153,7 @@ class Game {
       );
       return this.throwDice(dice, player);
     }
-    // Проверка на число и диапазон
+
     const number = parseInt(userNumber);
     if (isNaN(number) || number < 0 || number >= dice.getFaces()) {
       console.log(
