@@ -77,8 +77,21 @@ class Game {
   }
 
   async chooseDice(player, excludedDice = null) {
-    try {
-      console.log(`${player === "computer" ? "I" : "You"} choose the dice:`);
+    if (player === "computer") {
+      // Выбор случайной кости для компьютера
+      const availableDice = this.diceList.filter(
+        (dice) => dice !== excludedDice
+      );
+      const randomIndex = FairRandom.generateRandomNumber(
+        0,
+        availableDice.length - 1
+      );
+      const dice = availableDice[randomIndex];
+      console.log(`I choose the ${dice.toString()} dice.`);
+      return dice;
+    } else {
+      // Выбор кости для игрока
+      console.log("You choose the dice:");
       this.diceList.forEach((dice, index) => {
         if (dice !== excludedDice) {
           console.log(`${index} - ${dice.toString()}`);
@@ -111,15 +124,8 @@ class Game {
         return this.chooseDice(player, excludedDice);
       }
       const dice = this.diceList[index];
-      console.log(
-        `${
-          player === "computer" ? "I" : "You"
-        } choose the ${dice.toString()} dice.`
-      );
+      console.log(`You choose the ${dice.toString()} dice.`);
       return dice;
-    } catch (e) {
-      console.log("An error occurred. Please try again.");
-      return this.chooseDice(player, excludedDice);
     }
   }
 
