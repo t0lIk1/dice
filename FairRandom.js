@@ -13,9 +13,7 @@ class FairRandom {
   }
 
   static generateRandomNumber(min, max) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min + 1)) + min;
+    return crypto.randomInt(min, max + 1);
   }
 }
 
